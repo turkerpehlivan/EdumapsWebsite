@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okul Profili - EduMaps</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/school-profile.css">
+    <!-- Lightbox için -->
+    <!--<link rel="stylesheet" href="libs/lightbox2/css/lightbox.min.css">-->
+    <!-- Carousel için -->
+    <!--<link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css">-->
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="/" class="logo">EduMaps</a>
+                <div class="nav-links">
+                    <a href="/">Ana Sayfa</a>
+                    <a href="/search.html">Okul Ara</a>
+                    <a href="/about.html">Hakkımızda</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Okul Başlık Bölümü -->
+        <section class="school-header">
+            <div class="container">
+                <div class="school-cover" id="schoolCover">
+                    <!-- Kapak fotoğrafı buraya gelecek -->
+                </div>
+                <div class="school-info">
+                    <img src="" alt="Okul Logosu" class="school-logo" id="schoolLogo">
+                    <h1 id="schoolName">Okul Adı</h1>
+                    <div class="school-meta">
+                        <span id="schoolLocation">Konum</span>
+                        <span class="separator">•</span>
+                        <span id="schoolRating">Puan: 4.5</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 360° Sanal Tur -->
+        <section class="virtual-tour section">
+            <div class="container">
+                <h2>Sanal Tur</h2>
+                <div class="tour-container" id="tourContainer">
+                    <!-- 360° tour iframe buraya gelecek -->
+                </div>
+            </div>
+        </section>
+
+        <button id="toggleVideo">Tanıtım Videosunu Göster</button>
+        <div id="videoSection" style="display: none;">
+            <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="Okul Tanıtım Videosu"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <!-- Fotoğraf ve Video Galerisi -->
+        <section class="media-gallery section">
+            <div class="container">
+                <h2>Galeri</h2>
+                
+                <!-- Fotoğraf Galerisi -->
+                <div class="gallery-section">
+                    <h3>Fotoğraflar</h3>
+                    <div class="photo-grid" id="photoGallery">
+                        <!-- Fotoğraflar buraya dinamik olarak eklenecek -->
+                    </div>
+                </div>
+
+                <!-- Video Galerisi -->
+                <div class="gallery-section">
+                    <h3>Videolar</h3>
+                    <div class="video-grid" id="videoGallery">
+                        <div class="video-item">
+                            <iframe width="560" height="315"
+                                src="https://www.youtube.com/embed/VIDEO_ID"
+                                title="Okul Tanıtım Videosu"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Öğretmen Tanıtımları -->
+        <section class="teachers section">
+            <div class="container">
+                <h2>Öğretmenlerimiz</h2>
+                <div class="swiper teacherSwiper">
+                    <div class="swiper-wrapper" id="teacherProfiles">
+                        <!-- Öğretmen profilleri buraya dinamik olarak eklenecek -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Okul Bilgileri -->
+        <section class="school-details section">
+            <div class="container">
+                <h2>Okul Hakkında</h2>
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <h3>Genel Bilgiler</h3>
+                        <p id="schoolDescription"></p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>Özellikler</h3>
+                        <ul id="schoolFeatures">
+                            <!-- Özellikler buraya dinamik olarak eklenecek -->
+                        </ul>
+                    </div>
+                    <div class="detail-card">
+                        <h3>Başarılar</h3>
+                        <div id="schoolAchievements">
+                            <!-- Başarılar buraya dinamik olarak eklenecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yorumlar Bölümü -->
+        <section class="reviews section">
+            <div class="container">
+                <h2>Veli Yorumları</h2>
+                <div class="sort-buttons">
+                    <button id="sortDate">🕒 Yeniden Eskiye</button>
+                    <button id="sortRating">⭐ En Yüksekten Düşüğe</button>
+                </div>
+                <div id="reviewsContainer">
+                    <!-- Yorumlar buraya dinamik olarak eklenecek -->
+                </div>
+            </div>
+
+            <div id="commentFormContainer">
+            <!-- Yorum formu örneği -->
+                <form id="commentForm">
+                          <div class="rating-group">
+                            <label>Genel Puan:</label>
+                            <div class="star-rating" id="generalRating">
+                            <span data-value="1">&#9733;</span>
+                            <span data-value="2">&#9733;</span>
+                            <span data-value="3">&#9733;</span>
+                            <span data-value="4">&#9733;</span>
+                            <span data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="rating" id="rating" value="0">
+                        </div>
+
+                        <!-- Fiziksel Olanaklar -->
+                        <div class="rating-group">
+                            <label>Fiziksel Olanaklar:</label>
+                            <div class="star-rating" id="facilitiesRating">
+                            <span data-value="1">&#9733;</span>
+                            <span data-value="2">&#9733;</span>
+                            <span data-value="3">&#9733;</span>
+                            <span data-value="4">&#9733;</span>
+                            <span data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="physical_facilities_rating" id="physical_facilities_rating" value="0">
+                        </div>
+
+                        <!-- Öğretmen Kalitesi -->
+                        <div class="rating-group">
+                            <label>Öğretmen Kalitesi:</label>
+                            <div class="star-rating" id="teacherQualityRating">
+                            <span data-value="1">&#9733;</span>
+                            <span data-value="2">&#9733;</span>
+                            <span data-value="3">&#9733;</span>
+                            <span data-value="4">&#9733;</span>
+                            <span data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="teacher_quality_rating" id="teacher_quality_rating" value="0">
+                        </div>
+
+                        <!-- Ulaşım -->
+                        <div class="rating-group">
+                            <label>Ulaşım:</label>
+                            <div class="star-rating" id="transportationRating">
+                            <span data-value="1">&#9733;</span>
+                            <span data-value="2">&#9733;</span>
+                            <span data-value="3">&#9733;</span>
+                            <span data-value="4">&#9733;</span>
+                            <span data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="transportation_rating" id="transportation_rating" value="0">
+                        </div>
+
+                        <!-- Yorum -->
+                        <div class="form-group">
+                            <label for="comment">Yorumunuz:</label>
+                            <textarea name="comment" id="comment" rows="4" placeholder="Okul hakkındaki deneyimlerinizi paylaşın..."></textarea>
+                        </div>
+                        <div id="messageContainer"></div>
+
+                        <button type="submit" class="btn-submit">Gönder</button>
+                </form>
+
+            </div>
+
+        </section>
+        
+
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 EduMaps. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- Lightbox JS -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>-->
+
+    <!-- JavaScript -->
+    <!-- <script src="libs/lightbox2/js/lightbox.min.js"></script>
+    <script src="libs/swiper/swiper-bundle.min.js"></script> -->
+    <script src="js/school-profile.js"></script>
+</body>
+</html> 

@@ -1,0 +1,254 @@
+/* frontend/css/style.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef;
+    color: #343a40;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 1.2rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+nav {
+    margin-top: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 18px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #cce5ff;
+}
+
+nav button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+nav button:hover {
+    background-color: #c82333;
+}
+
+main {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+section {
+    margin-bottom: 50px;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+section.hidden {
+    display: none;
+}
+
+h2 {
+    color: #007bff;
+    border-bottom: 3px solid #e9ecef;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.filter-controls, .auth-forms, .preferences-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.filter-controls input[type="text"],
+.filter-controls select,
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.preferences-form select {
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-controls button,
+.auth-form button,
+.preferences-form button {
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.filter-controls button:hover,
+.auth-form button:hover,
+.preferences-form button:hover {
+    background-color: #218838;
+}
+
+.school-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.school-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.school-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.school-card h3 {
+    color: #0056b3;
+    margin-top: 0;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.school-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.school-card strong {
+    color: #495057;
+}
+
+.school-card button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    align-self: flex-start; /* Butonun sola hizalanmasını sağlar */
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.school-card button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+    background-color: #343a40;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.auth-forms {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.auth-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    flex: 1;
+    min-width: 300px;
+}
+
+.auth-form h3 {
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-form input {
+    width: calc(100% - 24px); /* Padding'i hesaba kat */
+    margin-bottom: 15px;
+}
+
+.auth-form button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.auth-form p {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.preferences-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    flex-basis: 100%; /* Her label yeni satıra geçsin */
+}
+
+.preferences-form select {
+    flex-basis: calc(50% - 15px); /* İki sütun düzeni */
+}
+
+.checkbox-group {
+    flex-basis: 100%;
+    margin-top: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2); /* Checkbox boyutunu büyüt */
+}
+.checkbox-group label {
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}

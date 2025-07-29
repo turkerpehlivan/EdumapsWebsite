@@ -1,0 +1,3668 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balıkesir Bilnet Anaokulu - Okul Detayı | EduMaps</title>
+
+    <!-- External Libraries CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/pannellum@2.5.6/build/pannellum.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css">
+
+    <!-- Yorum Sistemi CSS -->
+    <link rel="stylesheet" href="css/reviews.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ff6b35;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #666;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .nav-btn.primary {
+            background: #ff6b35;
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        .nav-btn.success {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .switch-form a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* User Profile Display */
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ff6b35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Admin Panel Styles */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .admin-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 1000px;
+            height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        .pending-reviews {
+            margin-top: 2rem;
+        }
+
+        .pending-review-item {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-actions-admin {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Rest of the original styles remain the same... */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .school-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .school-title {
+            display: flex;
+            justify-content: between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .school-info h1 {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .school-verified {
+            background: #28a745;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+
+        .school-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffa500;
+            font-size: 1.2rem;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .school-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+
+        .detail-icon {
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #ff6b35;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panorama-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f0f0f0;
+            margin-bottom: 1rem;
+        }
+
+        .tour-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tour-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #333;
+        }
+
+        .tour-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .room-tabs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .room-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .room-btn.active {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .photo-swiper {
+            width: 100%;
+            height: 350px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .photo-swiper .swiper-slide {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .photo-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .photo-swiper .swiper-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .photo-swiper .swiper-slide:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        .swiper-pagination-bullet {
+            background: #ff6b35;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ff6b35;
+        }
+
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .teacher-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .teacher-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            border: 3px solid #ff6b35;
+        }
+
+        .teacher-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .teacher-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .teacher-subject {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .teacher-video-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .teacher-video-btn:hover {
+            background: #e55a2b;
+            transform: scale(1.05);
+        }
+
+        /* Video Modal Styles */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-header {
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-video {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .close-video:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .video-content {
+            position: relative;
+            width: 100%;
+            height: 450px;
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .teacher-avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .teacher-details h3 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+
+        .teacher-details p {
+            margin: 5px 0 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .video-description {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Photo Gallery */
+        .photo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .photo-modal.active {
+            display: flex;
+        }
+
+        .photo-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .photo-modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .photo-modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .photo-modal-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .photo-modal-prev {
+            left: -60px;
+        }
+
+        .photo-modal-next {
+            right: -60px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .reviews-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reviews-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background: white;
+            color: #2c3e50;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sort-select:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+
+        .review-summary {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .overall-rating {
+            text-align: center;
+        }
+
+        .big-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6b35;
+            line-height: 1;
+        }
+
+        .big-stars {
+            font-size: 1.5rem;
+            color: #ffa500;
+        }
+
+        .total-reviews {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .rating-breakdown {
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .rating-label {
+            font-size: 0.8rem;
+            width: 20px;
+        }
+
+        .bar-container {
+            flex: 1;
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #ff6b35;
+            transition: width 0.3s;
+        }
+
+        .bar-count {
+            font-size: 0.8rem;
+            color: #666;
+            width: 30px;
+            text-align: right;
+        }
+
+        .review-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .rating-input {
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stars-input {
+            display: flex;
+            gap: 0.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .star-input {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+            margin: 0 2px;
+            user-select: none;
+        }
+
+        .star-input:hover,
+        .star-input.active {
+            color: #ffd700;
+        }
+
+        #starsInput {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        #ratingText {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .comment-input {
+            margin-bottom: 1.5rem;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .char-counter.warning {
+            color: #ff6b35;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .submit-review-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-review-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .submit-review-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-messages {
+            margin-top: 1rem;
+        }
+
+        .message {
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .reviews-list {
+            margin-top: 2rem;
+        }
+
+        .reviews-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .review-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .review-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .review-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff6b35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .reviewer-details h4 {
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .review-rating-display {
+            text-align: right;
+        }
+
+        .review-stars {
+            color: #ffa500;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .review-action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .review-action-btn:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .review-action-btn.voted {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .review-action-btn.voted:hover {
+            background-color: #0056b3;
+        }
+
+        .reply-form {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #007bff;
+        }
+
+        .reply-form .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .reply-form .form-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .reply-form .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .reply-form .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .reply-form .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .reply-form .btn:hover {
+            opacity: 0.9;
+        }
+
+        .pending-review {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .pending-text {
+            color: #17a2b8;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .school-title {
+                flex-direction: column;
+                align-items: start;
+            }
+
+            .school-details {
+                grid-template-columns: 1fr;
+            }
+
+            .panorama-container {
+                height: 300px;
+            }
+
+            .photo-swiper {
+                height: 250px;
+            }
+
+            .teachers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .review-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .rating-breakdown {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .review-item-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .review-rating-display {
+                text-align: left;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+
+            .admin-content {
+                margin: 5% auto;
+                width: 98%;
+                height: 85vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">Edu<span>Maps</span></a>
+            <nav class="nav-actions">
+                <a href="index.html" class="nav-btn">♡ Favoriler</a>
+                <a href="#" class="nav-btn">🌐 TR</a>
+
+                <!-- User not logged in -->
+                <div id="authButtons" class="nav-actions">
+                    <a href="#" class="nav-btn" id="loginBtn">👤 Giriş Yap</a>
+                    <a href="#" class="nav-btn success" id="registerBtn">📝 Üye Ol</a>
+                </div>
+
+                <!-- User logged in -->
+                <div id="userProfile" class="user-profile">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <span id="userName">Kullanıcı</span>
+                    <a href="#" class="nav-btn" id="logoutBtn">Çıkış</a>
+                </div>
+
+                <!-- Admin Panel Button -->
+                <a href="#" class="nav-btn success" id="adminBtn" style="display: none;">⚙️ Admin Panel</a>
+
+                <a href="index.html" class="nav-btn primary">← Ana Sayfa</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLogin">&times;</span>
+            <h2>Giriş Yap</h2>
+            <div id="loginAlert" class="alert"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">E-posta:</label>
+                    <input type="email" id="emailInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Şifre:</label>
+                    <input type="password" id="passwordInput" required>
+                </div>
+                <button type="submit" class="btn" id="loginSubmit">Giriş Yap</button>
+            </form>
+            <div class="switch-form">
+                <p>Hesabınız yok mu? <a href="#" id="switchToRegister">Üye Ol</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeRegister">&times;</span>
+            <h2>Üye Ol</h2>
+            <div id="registerAlert" class="alert"></div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Ad Soyad:</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">E-posta:</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre:</label>
+                    <input type="password" id="registerPassword" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="registerPasswordConfirm">Şifre Tekrar:</label>
+                    <input type="password" id="registerPasswordConfirm" required>
+                </div>
+                <button type="submit" class="btn" id="registerSubmit">Üye Ol</button>
+            </form>
+            <div class="switch-form">
+                <p>Zaten hesabınız var mı? <a href="#" id="switchToLogin">Giriş Yap</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Admin Panel - Yorum Onaylama</h2>
+                <span class="close" id="closeAdmin">&times;</span>
+            </div>
+            <div id="adminAlert" class="alert"></div>
+            <div class="pending-reviews" id="pendingReviews">
+                <h3>Onay Bekleyen Yorumlar</h3>
+                <div id="pendingReviewsList">
+                    <!-- Pending reviews will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- School Header -->
+        <div class="school-header">
+            <div class="school-title">
+                <div class="school-info">
+                    <h1>
+                        Balıkesir bilnet anaokulu
+                        <span class="school-verified">✓ Doğrulanmış</span>
+                    </h1>
+                    <div class="school-rating">
+                        <span class="stars" id="schoolStars">★★★★☆</span>
+                        <span class="rating-score" id="averageRating">4.2</span>
+                        <span class="rating-count" id="reviewCount">(18 değerlendirme)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="school-details">
+                <div class="detail-item">
+                    <span class="detail-icon">📞</span>
+                    <span>5377630564</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">📍</span>
+                    <span>İstanbul/Bahçelievler</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">🎓</span>
+                    <span>Anaokulu</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">💰</span>
+                    <span>1.500-2.500 TL</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">👥</span>
+                    <span>15-20 öğrenci/sınıf</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">🏗️</span>
+                    <span>Depreme Dayanıklı</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 360° Sanal Tur -->
+        <div class="section">
+            <h2 class="section-title">🌐 360° Sanal Tur</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                Okulumuzun her köşesini 360° sanal tur ile keşfedin. Farklı alanları gezebilir,
+                tam ekran modunda detaylı inceleme yapabilirsiniz.
+            </p>
+
+            <div class="panorama-container">
+                <div id="panorama" style="width: 100%; height: 100%;"></div>
+
+                <div class="tour-controls">
+                    <button class="tour-btn" onclick="toggleFullscreen()">🔍 Tam Ekran</button>
+                    <button class="tour-btn" onclick="toggleAutoRotate()">🔄 Otomatik Döndür</button>
+                </div>
+            </div>
+
+            <div class="room-tabs">
+                <button class="room-btn active" onclick="switchRoom('entrance')">🚪 Giriş</button>
+                <button class="room-btn" onclick="switchRoom('classroom')">📚 Sınıf</button>
+                <button class="room-btn" onclick="switchRoom('library')">📖 Kütüphane</button>
+                <button class="room-btn" onclick="switchRoom('playground')">🎪 Oyun Alanı</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem; color: #888; font-size: 14px;">
+                💡 İpucu: Fareyi sürükleyerek etrafınıza bakabilir, yukarıdaki butonlarla farklı alanları gezebilirsiniz.
+            </div>
+        </div>
+
+        <!-- Fotoğraf Galerisi -->
+        <div class="section">
+            <h2 class="section-title">📸 Fotoğraf Galerisi</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                Okulumuzun güncel fotoğraflarını inceleyin. Sınıflarımızdan oyun alanlarımıza,
+                laboratuvarlarımızdan spor salonumuza kadar tüm alanlarımızı görün.
+            </p>
+
+            <div class="swiper photo-swiper">
+                <div class="swiper-wrapper" id="photoGallery">
+                    <!-- Fotoğraflar dinamik olarak yüklenecek -->
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem; color: #888; font-size: 14px;">
+                📷 Fotoğraflara tıklayarak büyük boyutta görüntüleyebilirsiniz.
+            </div>
+        </div>
+
+        <!-- Öğretmen Kadrosu -->
+        <div class="section">
+            <h2 class="section-title">👩‍🏫 Öğretmen Kadromuz</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                Deneyimli ve uzman öğretmen kadromuzla tanışın. Her öğretmenimizin tanıtım videosunu
+                izleyerek eğitim anlayışlarını ve yaklaşımlarını öğrenebilirsiniz.
+            </p>
+
+            <div class="teachers-grid" id="teachersGrid">
+                <!-- Öğretmenler dinamik olarak yüklenecek -->
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem; color: #888; font-size: 14px;">
+                🎥 Öğretmenlerimizin tanıtım videolarını izlemek için "Tanıtım Videosunu İzle" butonuna tıklayın.
+            </div>
+        </div>
+
+        <!-- Yorumlar ve Değerlendirmeler -->
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <h2 class="reviews-title">⭐ Yorumlar ve Değerlendirmeler</h2>
+                <div class="reviews-controls">
+                    <select id="reviewSortSelect" onchange="sortReviews(this.value)" class="sort-select">
+                        <option value="quality">🏆 En Kaliteli</option>
+                        <option value="newest">🕒 En Yeni</option>
+                        <option value="helpful">👍 En Faydalı</option>
+                        <option value="rating">⭐ En Yüksek Puan</option>
+                        <option value="oldest">📅 En Eski</option>
+                    </select>
+                    <button class="add-review-btn" id="addReviewBtn" onclick="toggleReviewForm()">Yorum Yap</button>
+                </div>
+            </div>
+
+            <!-- Yorum Formu (Gizli) -->
+            <div id="reviewFormContainer" class="review-form" style="display: none;">
+                <h3>Değerlendirmenizi Paylaşın</h3>
+
+                <form id="reviewForm">
+                    <!-- Genel Puan -->
+                    <div class="form-group">
+                        <div class="star-rating" data-rating="overall">
+                            <span class="star-rating-label">Genel Puan:</span>
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detaylı Puanlar -->
+                    <div class="form-group">
+                        <div class="star-rating" data-rating="physical_facilities">
+                            <span class="star-rating-label">Fiziksel Olanaklar:</span>
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="star-rating" data-rating="teacher_quality">
+                            <span class="star-rating-label">Öğretmen Kalitesi:</span>
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="star-rating" data-rating="transportation">
+                            <span class="star-rating-label">Ulaşım:</span>
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yorum Metni -->
+                    <div class="form-group">
+                        <label class="form-label" for="reviewComment">Yorumunuz:</label>
+                        <textarea
+                            id="reviewComment"
+                            class="form-textarea"
+                            placeholder="Okul hakkındaki deneyimlerinizi paylaşın..."
+                            maxlength="1000"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- Form Butonları -->
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancelReviewBtn" onclick="toggleReviewForm()">İptal</button>
+                        <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Yorumlar Listesi -->
+            <div id="reviewsList" class="reviews-list">
+                <!-- Sample reviews will be loaded here by JavaScript -->
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">A</div>
+                            <div class="reviewer-details">
+                                <h4>Ayşe Yılmaz</h4>
+                                <div class="review-date">2024-01-15</div>
+                            </div>
+                        </div>
+                        <div class="review-rating-display">
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="review-text">Çocuğum bu okulda çok mutlu. Öğretmenler gerçekten ilgili ve eğitim kalitesi yüksek.</div>
+                    <div class="review-actions">
+                        <button class="review-action-btn helpful-btn" data-review-id="1" onclick="toggleHelpful(1, this)">👍 Faydalı (<span class="helpful-count">0</span>)</button>
+                        <button class="review-action-btn" onclick="showReplyForm(1)">💬 Yanıtla</button>
+                        <button class="review-action-btn" onclick="reportReview(1)">🚩 Bildir</button>
+                    </div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">M</div>
+                            <div class="reviewer-details">
+                                <h4>Mehmet Kaya</h4>
+                                <div class="review-date">2024-01-10</div>
+                            </div>
+                        </div>
+                        <div class="review-rating-display">
+                            <div class="review-stars">★★★★☆</div>
+                        </div>
+                    </div>
+                    <div class="review-text">Genel olarak memnunuz. Sadece ulaşım biraz zor oluyor.</div>
+                    <div class="review-actions">
+                        <button class="review-action-btn helpful-btn" data-review-id="2" onclick="toggleHelpful(2, this)">👍 Faydalı (<span class="helpful-count">0</span>)</button>
+                        <button class="review-action-btn" onclick="showReplyForm(2)">💬 Yanıtla</button>
+                        <button class="review-action-btn" onclick="reportReview(2)">🚩 Bildir</button>
+                    </div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">F</div>
+                            <div class="reviewer-details">
+                                <h4>Fatma Demir</h4>
+                                <div class="review-date">2024-01-05</div>
+                            </div>
+                        </div>
+                        <div class="review-rating-display">
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="review-text">Harika bir okul! Çocuğumun gelişimini net bir şekilde görebiliyoruz.</div>
+                    <div class="review-actions">
+                        <button class="review-action-btn helpful-btn" data-review-id="3" onclick="toggleHelpful(3, this)">👍 Faydalı (<span class="helpful-count">0</span>)</button>
+                        <button class="review-action-btn" onclick="showReplyForm(3)">💬 Yanıtla</button>
+                        <button class="review-action-btn" onclick="reportReview(3)">🚩 Bildir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-container">
+            <div class="video-header">
+                <div class="video-title" id="videoTitle">Öğretmen Tanıtım Videosu</div>
+                <button class="close-video" onclick="closeVideoModal()">×</button>
+            </div>
+            <div class="video-content">
+                <iframe class="video-iframe" id="videoIframe" src="" allowfullscreen></iframe>
+            </div>
+            <div class="video-info" id="videoInfo">
+                <!-- Teacher info will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <div class="photo-modal-content">
+            <button class="photo-modal-close" onclick="closePhotoModal()">×</button>
+            <button class="photo-modal-nav photo-modal-prev" onclick="prevPhoto()">‹</button>
+            <img id="photoModalImg" src="" alt="">
+            <button class="photo-modal-nav photo-modal-next" onclick="nextPhoto()">›</button>
+        </div>
+    
+    </div>
+
+    <section id="recommendations-section" class="hidden">
+        <h2>Size Özel Öneriler</h2>
+        <div id="recommendation-list">
+            <p>Size özel öneriler burada listelenecek.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 EduMaps - Tüm telif hakları saklıdır.</p>
+    </footer>
+
+    <!-- External JavaScript Libraries -->
+    <script src="https://unpkg.com/pannellum@2.5.6/build/pannellum.js"></script>
+    <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/dompurify@2.4.7/dist/purify.min.js"></script>
+
+    <script>
+        // API Base URL - Flask backend için güncellendi
+        const API_BASE = 'http://127.0.0.1:5000/api';
+
+        // Global error handler
+        window.addEventListener('error', function(event) {
+            console.error('🚨 Global error caught:', event.error);
+            console.error('🚨 Error details:', {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno
+            });
+        });
+
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('🚨 Unhandled promise rejection:', event.reason);
+        });
+
+        // Global Variables
+        let panoramaViewer;
+        let isAutoRotating = false;
+        let currentRating = 0;
+        let currentUser = null;
+        let isLoggedIn = false;
+
+        // Simple functions for buttons
+        function toggleReviewForm() {
+            console.log('🔥 toggleReviewForm called');
+            const formContainer = document.getElementById('reviewFormContainer');
+            if (formContainer) {
+                if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+                    formContainer.style.display = 'block';
+                    console.log('✅ Form opened');
+                } else {
+                    formContainer.style.display = 'none';
+                    console.log('✅ Form closed');
+                }
+            } else {
+                console.error('❌ Form container not found');
+            }
+        }
+
+        function sortReviews(sortBy) {
+            console.log('🔄 Sorting reviews by:', sortBy);
+            if (window.reviewSystem) {
+                reviewSystem.loadReviews(sortBy);
+            }
+        }
+
+        // Reply functions
+        function showReplyForm(reviewId) {
+            console.log('💬 showReplyForm called for review:', reviewId);
+
+            if (!currentUser || !currentUser.id) {
+                alert('Yanıt vermek için giriş yapmalısınız.');
+                return;
+            }
+
+            // Check if reply form already exists
+            const existingForm = document.querySelector(`#reply-form-${reviewId}`);
+            if (existingForm) {
+                existingForm.remove();
+                return;
+            }
+
+            // Create reply form
+            const replyForm = document.createElement('div');
+            replyForm.id = `reply-form-${reviewId}`;
+            replyForm.className = 'reply-form';
+            replyForm.innerHTML = `
+                <div class="form-group">
+                    <textarea id="reply-text-${reviewId}" placeholder="Yanıtınızı yazın..." rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="submitReply(${reviewId})" class="btn btn-primary">Yanıt Gönder</button>
+                    <button type="button" onclick="cancelReply(${reviewId})" class="btn btn-secondary">İptal</button>
+                </div>
+            `;
+
+            // Find the review item and append the form
+            const reviewItem = document.querySelector(`[data-review-id="${reviewId}"]`).closest('.review-item');
+            reviewItem.appendChild(replyForm);
+        }
+
+        async function submitReply(reviewId) {
+            console.log('📤 submitReply called for review:', reviewId);
+
+            const replyText = document.getElementById(`reply-text-${reviewId}`).value.trim();
+            if (!replyText) {
+                alert('Lütfen yanıt metnini girin.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/reviews/${reviewId}/reply`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        reply_text: replyText
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Yanıtınız gönderildi! Moderatör onayından sonra görünecektir.');
+                    cancelReply(reviewId);
+                } else {
+                    alert(result.message || 'Yanıt gönderilirken hata oluştu.');
+                }
+            } catch (error) {
+                console.error('Reply submission error:', error);
+                alert('Yanıt gönderilirken hata oluştu.');
+            }
+        }
+
+        function cancelReply(reviewId) {
+            const replyForm = document.querySelector(`#reply-form-${reviewId}`);
+            if (replyForm) {
+                replyForm.remove();
+            }
+        }
+
+        async function reportReview(reviewId) {
+            console.log('🚩 reportReview called for review:', reviewId);
+
+            if (!currentUser || !currentUser.id) {
+                alert('Yorum bildirmek için giriş yapmalısınız.');
+                return;
+            }
+
+            const reason = prompt('Bildirim sebebini belirtiniz (isteğe bağlı):', 'Uygunsuz içerik');
+            if (reason === null) return; // User cancelled
+
+            if (confirm('Bu yorumu bildirmek istediğinizden emin misiniz?')) {
+                try {
+                    const response = await fetch(`http://127.0.0.1:5000/api/reviews/${reviewId}/report`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_id: currentUser.id,
+                            reason: reason
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        alert('Bildirim gönderildi. İnceleme için teşekkür ederiz.');
+                    } else {
+                        alert(result.message || 'Bildirim gönderilirken hata oluştu.');
+                    }
+                } catch (error) {
+                    console.error('Report error:', error);
+                    alert('Bildirim gönderilirken hata oluştu.');
+                }
+            }
+        }
+
+        // Track helpful votes per user
+        let userHelpfulVotes = JSON.parse(localStorage.getItem('userHelpfulVotes') || '{}');
+
+        // Load voted states on page load
+        async function loadVotedStates() {
+            if (!currentUser || !currentUser.id) {
+                console.log('👤 No user logged in, skipping vote loading');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/users/${currentUser.id}/helpful-votes`);
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Clear localStorage and update with server data
+                    userHelpfulVotes = {};
+                    result.voted_reviews.forEach(reviewId => {
+                        userHelpfulVotes[reviewId] = true;
+                        const button = document.querySelector(`[data-review-id="${reviewId}"]`);
+                        if (button) {
+                            button.classList.add('voted');
+                        }
+                    });
+
+                    localStorage.setItem('userHelpfulVotes', JSON.stringify(userHelpfulVotes));
+                    console.log('✅ User votes loaded from server:', result.voted_reviews);
+                } else {
+                    console.error('❌ Failed to load user votes:', result.message);
+                }
+            } catch (error) {
+                console.error('❌ Error loading user votes:', error);
+                // Fallback to localStorage
+                Object.keys(userHelpfulVotes).forEach(reviewId => {
+                    const button = document.querySelector(`[data-review-id="${reviewId}"]`);
+                    if (button) {
+                        button.classList.add('voted');
+                    }
+                });
+            }
+        }
+
+        async function toggleHelpful(reviewId, buttonElement) {
+            // Debug log
+            console.log('🔍 toggleHelpful called:', { reviewId, currentUser });
+
+            // Check if user is logged in
+            if (!currentUser || !currentUser.id) {
+                console.error('❌ User not logged in or missing ID:', currentUser);
+                alert('Faydalı oyu vermek için giriş yapmalısınız.');
+                return;
+            }
+
+            const countSpan = buttonElement.querySelector('.helpful-count');
+            let currentCount = parseInt(countSpan.textContent);
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/reviews/${reviewId}/helpful`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Update UI based on server response
+                    countSpan.textContent = result.helpful_count;
+
+                    if (result.user_voted) {
+                        buttonElement.classList.add('voted');
+                        userHelpfulVotes[reviewId] = true;
+                        console.log(`👍 Added helpful vote for review ${reviewId}`);
+                    } else {
+                        buttonElement.classList.remove('voted');
+                        delete userHelpfulVotes[reviewId];
+                        console.log(`👎 Removed helpful vote for review ${reviewId}`);
+                    }
+
+                    // Update localStorage for consistency
+                    localStorage.setItem('userHelpfulVotes', JSON.stringify(userHelpfulVotes));
+                } else {
+                    alert('Hata: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Helpful vote error:', error);
+                alert('Oy verirken hata oluştu.');
+            }
+        }
+
+        function reportReview(reviewId) {
+            if (confirm('Bu yorumu bildirmek istediğinizden emin misiniz?')) {
+                alert('Yorum bildirildi! Moderatörlerimiz inceleyecektir.');
+                console.log(`🚩 Review ${reviewId} reported`);
+            }
+        }
+
+        function showReplyForm(reviewId) {
+            // Check if user is logged in
+            if (!currentUser || !currentUser.username) {
+                alert('Yanıt vermek için giriş yapmalısınız.');
+                return;
+            }
+
+            const replyText = prompt('Yanıtınızı yazın:');
+            if (replyText && replyText.trim()) {
+                // Send reply to admin for approval
+                const replyData = {
+                    review_id: reviewId,
+                    reply_text: replyText.trim(),
+                    user_name: currentUser.username
+                };
+
+                console.log('💬 Reply submitted for approval:', replyData);
+
+                // Send to backend
+                sendReplyToAdmin(replyData);
+            }
+        }
+
+        // Send reply to admin for approval
+        async function sendReplyToAdmin(replyData) {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/reviews/${replyData.review_id}/reply`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_name: replyData.user_name,
+                        reply_text: replyData.reply_text
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Yanıtınız admin onayına gönderildi. Onaylandıktan sonra yayınlanacaktır.');
+                } else {
+                    alert('Hata: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Reply submission error:', error);
+                alert('Yanıt gönderilirken hata oluştu.');
+            }
+        }
+
+        // Authentication System
+        class AuthSystem {
+            constructor() {
+                this.initEventListeners();
+                this.checkLoginStatus();
+            }
+
+            initEventListeners() {
+                // Wait for DOM to be fully loaded
+                if (document.readyState !== 'complete') {
+                    console.log('⏳ DOM not ready, waiting...');
+                    setTimeout(() => this.initEventListeners(), 100);
+                    return;
+                }
+
+                console.log('🔧 Initializing event listeners...');
+
+                // Modal events with null checks
+                const loginBtn = document.getElementById('loginBtn');
+                const registerBtn = document.getElementById('registerBtn');
+                const adminBtn = document.getElementById('adminBtn');
+
+                if (loginBtn) {
+                    loginBtn.addEventListener('click', () => this.showLoginModal());
+                    console.log('✅ Login button listener added');
+                } else {
+                    console.error('❌ loginBtn not found');
+                }
+
+                if (registerBtn) {
+                    registerBtn.addEventListener('click', () => this.showRegisterModal());
+                    console.log('✅ Register button listener added');
+                } else {
+                    console.error('❌ registerBtn not found');
+                }
+
+                if (adminBtn) {
+                    adminBtn.addEventListener('click', () => this.showAdminPanel());
+                    console.log('✅ Admin button listener added');
+                } else {
+                    console.error('❌ adminBtn not found');
+                }
+
+                // Close modal events
+                document.getElementById('closeLogin').addEventListener('click', () => this.closeModal('loginModal'));
+                document.getElementById('closeRegister').addEventListener('click', () => this.closeModal('registerModal'));
+                document.getElementById('closeAdmin').addEventListener('click', () => this.closeModal('adminPanel'));
+
+                // Switch between login/register
+                document.getElementById('switchToRegister').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.closeModal('loginModal');
+                    this.showRegisterModal();
+                });
+                document.getElementById('switchToLogin').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.closeModal('registerModal');
+                    this.showLoginModal();
+                });
+
+                // Form submissions with null checks
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+                    console.log('✅ Login form event listener added');
+                } else {
+                    console.error('❌ Login form not found!');
+                }
+
+                const registerForm = document.getElementById('registerForm');
+                console.log('🔐 Register form element:', registerForm);
+                if (registerForm) {
+                    registerForm.addEventListener('submit', (e) => {
+                        console.log('🔐 Register form submit event triggered');
+                        this.handleRegister(e);
+                    });
+                    console.log('✅ Register form event listener added');
+                } else {
+                    console.error('❌ Register form not found!');
+                }
+
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => this.handleLogout());
+                    console.log('✅ Logout button event listener added');
+                } else {
+                    console.error('❌ Logout button not found!');
+                }
+
+                // Close modal when clicking outside
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal') || e.target.classList.contains('admin-panel')) {
+                        this.closeModal(e.target.id);
+                    }
+                });
+            }
+
+            showLoginModal() {
+                console.log('🔐 showLoginModal called');
+                const modal = document.getElementById('loginModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    console.log('✅ Login modal shown');
+                    // Don't clear alert - let it be
+                } else {
+                    console.error('❌ loginModal not found');
+                    alert('Giriş modalı açılamadı. Sayfayı yenileyin.');
+                }
+            }
+
+            showRegisterModal() {
+                console.log('📝 showRegisterModal called');
+                const modal = document.getElementById('registerModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    this.clearAlert('registerAlert');
+                    console.log('✅ Register modal shown');
+                } else {
+                    console.error('❌ registerModal not found');
+                }
+            }
+
+            showAdminPanel() {
+                if (currentUser && currentUser.role === 'admin') {
+                    document.getElementById('adminPanel').style.display = 'block';
+                    this.loadPendingReviews();
+                } else {
+                    this.showAlert('adminAlert', 'error', 'Admin yetkisi gerekli!');
+                }
+            }
+
+            closeModal(modalId) {
+                console.log(`🚪 closeModal called: ${modalId}`);
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'none';
+                    console.log(`✅ Modal ${modalId} closed`);
+                } else {
+                    console.error(`❌ Modal ${modalId} not found`);
+                }
+            }
+
+            showAlert(alertId, type, message) {
+                console.log(`🚨 showAlert called: ${alertId}, ${type}, ${message}`);
+
+                try {
+                    const alert = document.getElementById(alertId);
+                    console.log(`🚨 Alert element found:`, alert);
+
+                    if (!alert) {
+                        console.error(`❌ Alert element not found: ${alertId}`);
+                        // Fallback 1: Try to create alert element
+                        this.createFallbackAlert(alertId, type, message);
+                        return;
+                    }
+
+                    alert.className = `alert ${type}`;
+                    alert.textContent = message;
+                    alert.style.display = 'block';
+                    console.log(`✅ Alert displayed successfully`);
+                } catch (error) {
+                    console.error(`❌ showAlert error:`, error);
+                    // Fallback 2: Browser alert
+                    alert(`${type.toUpperCase()}: ${message}`);
+                }
+            }
+
+            createFallbackAlert(alertId, type, message) {
+                try {
+                    // Try to find parent container
+                    let container = null;
+                    if (alertId === 'loginAlert') {
+                        container = document.getElementById('loginModal');
+                    } else if (alertId === 'registerAlert') {
+                        container = document.getElementById('registerModal');
+                    }
+
+                    if (container) {
+                        // Create alert element
+                        const alertDiv = document.createElement('div');
+                        alertDiv.id = alertId;
+                        alertDiv.className = `alert ${type}`;
+                        alertDiv.textContent = message;
+                        alertDiv.style.display = 'block';
+                        alertDiv.style.margin = '10px 0';
+                        alertDiv.style.padding = '10px';
+                        alertDiv.style.borderRadius = '4px';
+                        alertDiv.style.backgroundColor = type === 'error' ? '#f8d7da' : '#d4edda';
+                        alertDiv.style.color = type === 'error' ? '#721c24' : '#155724';
+                        alertDiv.style.border = type === 'error' ? '1px solid #f5c6cb' : '1px solid #c3e6cb';
+
+                        // Insert at the beginning of modal
+                        container.insertBefore(alertDiv, container.firstChild);
+                        console.log(`✅ Fallback alert created for ${alertId}`);
+                    } else {
+                        // Final fallback: browser alert
+                        alert(`${type.toUpperCase()}: ${message}`);
+                    }
+                } catch (error) {
+                    console.error(`❌ createFallbackAlert error:`, error);
+                    alert(`${type.toUpperCase()}: ${message}`);
+                }
+            }
+
+            clearAlert(alertId) {
+                console.log(`🧹 clearAlert called: ${alertId}`);
+                try {
+                    const alert = document.getElementById(alertId);
+                    if (alert && alert.style) {
+                        alert.style.display = 'none';
+                        alert.textContent = '';
+                        console.log(`✅ Alert ${alertId} cleared`);
+                    } else {
+                        console.warn(`⚠️ Alert element ${alertId} not found or has no style property`);
+                    }
+                } catch (error) {
+                    console.error(`❌ Error clearing alert ${alertId}:`, error);
+                }
+            }
+
+            safeShowAlert(alertId, type, message) {
+                console.log(`🛡️ safeShowAlert called: ${alertId}, ${type}, ${message}`);
+
+                // Method 1: Try normal showAlert
+                try {
+                    this.showAlert(alertId, type, message);
+                    return;
+                } catch (error) {
+                    console.error(`❌ showAlert failed:`, error);
+                }
+
+                // Method 2: Try direct DOM manipulation
+                try {
+                    const alertElement = document.getElementById(alertId);
+                    if (alertElement) {
+                        alertElement.className = `alert ${type}`;
+                        alertElement.textContent = message;
+                        if (alertElement.style) {
+                            alertElement.style.display = 'block';
+                        }
+                        console.log(`✅ Direct DOM alert shown`);
+                        return;
+                    }
+                } catch (error) {
+                    console.error(`❌ Direct DOM failed:`, error);
+                }
+
+                // Method 3: Browser alert as final fallback
+                console.log(`🚨 Using browser alert as fallback`);
+                alert(`${type.toUpperCase()}: ${message}`);
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                console.log('🔐 Simple login started');
+
+                // Get elements with basic checks
+                const submitBtn = document.getElementById('loginSubmit');
+                const emailElement = document.getElementById('emailInput');
+                const passwordElement = document.getElementById('passwordInput');
+
+                // Basic validation
+                if (!submitBtn || !emailElement || !passwordElement) {
+                    alert('Form elementleri bulunamadı. Sayfayı yenileyin.');
+                    return;
+                }
+
+                // Get values
+                const email = emailElement.value.trim();
+                const password = passwordElement.value;
+
+                if (!email || !password) {
+                    alert('E-posta ve şifre gerekli');
+                    return;
+                }
+
+                // Update button
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Giriş yapılıyor...';
+
+                try {
+                    console.log('🌐 Making API call to:', `${API_BASE}/login`);
+                    console.log('🌐 Request data:', { email, password: '***' });
+
+                    // Make API call
+                    const response = await fetch(`${API_BASE}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    console.log('🌐 Response status:', response.status);
+                    console.log('🌐 Response headers:', response.headers);
+
+                    const data = await response.json();
+                    console.log('🌐 Response data:', data);
+
+                    if (response.ok) {
+                        // Success - normalize user data
+                        currentUser = {
+                            id: data.user_id || data.id,
+                            username: data.username,
+                            email: data.email,
+                            user_id: data.user_id || data.id
+                        };
+                        isLoggedIn = true;
+                        localStorage.setItem('token', 'dummy-token');
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+
+                        this.updateUI();
+                        this.closeModal('loginModal');
+                        emailElement.value = '';
+                        passwordElement.value = '';
+
+                        console.log('✅ Login successful');
+
+                        // Load user's helpful votes
+                        setTimeout(() => {
+                            loadVotedStates();
+                        }, 500);
+                    } else {
+                        // Error from server
+                        console.log('❌ Server error:', data.message);
+                        alert(data.message || 'Giriş başarısız');
+                    }
+                } catch (error) {
+                    // Network or other error
+                    console.error('❌ Network error details:', error);
+                    console.error('❌ Error name:', error.name);
+                    console.error('❌ Error message:', error.message);
+                    alert(`Bağlantı hatası: ${error.message}`);
+                } finally {
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Giriş Yap';
+                }
+            }
+
+            async handleRegister(e) {
+                e.preventDefault();
+                console.log('🔐 Register form submitted');
+
+                const submitBtn = document.getElementById('registerSubmit');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Kayıt yapılıyor...';
+
+                // Get form elements
+                const nameElement = document.getElementById('registerName');
+                const emailElement = document.getElementById('registerEmail');
+                const passwordElement = document.getElementById('registerPassword');
+                const passwordConfirmElement = document.getElementById('registerPasswordConfirm');
+
+                console.log('Form elements:', { nameElement, emailElement, passwordElement, passwordConfirmElement });
+
+                const name = nameElement ? nameElement.value.trim() : '';
+                const email = emailElement ? emailElement.value.trim() : '';
+                const password = passwordElement ? passwordElement.value : '';
+                const passwordConfirm = passwordConfirmElement ? passwordConfirmElement.value : '';
+
+                console.log('Form values:', {
+                    name: `"${name}" (length: ${name.length})`,
+                    email: `"${email}" (length: ${email.length})`,
+                    password: `"${password}" (length: ${password.length})`,
+                    passwordConfirm: `"${passwordConfirm}" (length: ${passwordConfirm.length})`
+                });
+
+                // Basic validation with detailed logging
+                console.log('Validation check:');
+                console.log('- Name empty?', !name);
+                console.log('- Email empty?', !email);
+                console.log('- Password empty?', !password);
+
+                if (!name) {
+                    console.log('❌ Name is empty');
+                    this.showAlert('registerAlert', 'error', 'Ad Soyad alanı boş olamaz');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Üye Ol';
+                    return;
+                }
+
+                if (!email) {
+                    console.log('❌ Email is empty');
+                    this.showAlert('registerAlert', 'error', 'E-posta alanı boş olamaz');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Üye Ol';
+                    return;
+                }
+
+                if (!password) {
+                    console.log('❌ Password is empty');
+                    this.showAlert('registerAlert', 'error', 'Şifre alanı boş olamaz');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Üye Ol';
+                    return;
+                }
+
+                if (password !== passwordConfirm) {
+                    console.log('❌ Passwords do not match');
+                    this.showAlert('registerAlert', 'error', 'Şifreler uyuşmuyor');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Üye Ol';
+                    return;
+                }
+
+                if (password.length < 6) {
+                    console.log('❌ Password too short');
+                    this.showAlert('registerAlert', 'error', 'Şifre en az 6 karakter olmalıdır');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Üye Ol';
+                    return;
+                }
+
+                console.log('✅ All validations passed');
+
+                try {
+                    console.log('🌐 Sending register request to backend...');
+                    const response = await fetch(`${API_BASE}/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username: name, email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        this.showAlert('registerAlert', 'success', 'Kayıt başarılı! Şimdi giriş yapabilirsiniz.');
+                        setTimeout(() => {
+                            this.closeModal('registerModal');
+                            this.showLoginModal();
+                        }, 2000);
+
+                        // Reset form
+                        document.getElementById('registerForm').reset();
+                    } else {
+                        this.showAlert('registerAlert', 'error', data.message || 'Kayıt yapılamadı');
+                    }
+                } catch (error) {
+                    this.showAlert('registerAlert', 'error', 'Bağlantı hatası oluştu');
+                    console.error('Register error:', error);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Üye Ol';
+                }
+            }
+
+            handleLogout() {
+                currentUser = null;
+                isLoggedIn = false;
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                this.updateUI();
+                this.showAlert('formMessages', 'success', 'Başarıyla çıkış yapıldı!');
+            }
+
+            checkLoginStatus() {
+                const token = localStorage.getItem('token');
+                const user = localStorage.getItem('user');
+
+                if (token && user) {
+                    try {
+                        const userData = JSON.parse(user);
+                        // Normalize user data
+                        currentUser = {
+                            id: userData.user_id || userData.id,
+                            username: userData.username,
+                            email: userData.email,
+                            user_id: userData.user_id || userData.id
+                        };
+                        isLoggedIn = true;
+                        this.updateUI();
+                    } catch (error) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                    }
+                }
+            }
+
+            updateUI() {
+                const authButtons = document.getElementById('authButtons');
+                const userProfile = document.getElementById('userProfile');
+                const adminBtn = document.getElementById('adminBtn');
+                const loginRequired = document.getElementById('loginRequired');
+                const submitBtn = document.getElementById('submitReviewBtn');
+                const userName = document.getElementById('userName');
+                const userAvatar = document.getElementById('userAvatar');
+
+                if (isLoggedIn && currentUser) {
+                    if (authButtons) authButtons.style.display = 'none';
+                    if (userProfile) userProfile.style.display = 'flex';
+
+                    if (userName) userName.textContent = currentUser.username || currentUser.name || 'Kullanıcı';
+                    if (userAvatar && (currentUser.username || currentUser.name)) {
+                        const firstChar = (currentUser.username || currentUser.name).charAt(0).toUpperCase();
+                        userAvatar.textContent = firstChar;
+                    }
+
+                    if (adminBtn && currentUser.role === 'admin') {
+                        adminBtn.style.display = 'inline-block';
+                    }
+
+                    if (loginRequired) loginRequired.style.display = 'none';
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Yorumu Gönder';
+                        submitBtn.disabled = false;
+                    }
+                } else {
+                    if (authButtons) authButtons.style.display = 'flex';
+                    if (userProfile) userProfile.style.display = 'none';
+                    if (adminBtn) adminBtn.style.display = 'none';
+                    if (loginRequired) loginRequired.style.display = 'block';
+
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Giriş Yapın';
+                        submitBtn.disabled = false;
+                    }
+                }
+            }
+
+
+            async loadPendingReviews() {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/reviews/pending`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const reviews = await response.json();
+                        this.displayPendingReviews(reviews);
+                    } else {
+                        this.showAlert('adminAlert', 'error', 'Yorumlar yüklenemedi');
+                    }
+                } catch (error) {
+                    this.showAlert('adminAlert', 'error', 'Bağlantı hatası');
+                    console.error('Error loading pending reviews:', error);
+                }
+            }
+
+            displayPendingReviews(reviews) {
+                const container = document.getElementById('pendingReviewsList');
+
+                if (reviews.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Onay bekleyen yorum bulunmuyor.</p>';
+                    return;
+                }
+
+                container.innerHTML = reviews.map(review => `
+                    <div class="pending-review-item">
+                        <div class="review-item-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">
+                                    ${review.user_name.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="reviewer-details">
+                                    <h4>${review.user_name}</h4>
+                                    <div class="review-date">${new Date(review.created_at).toLocaleDateString('tr-TR')}</div>
+                                </div>
+                            </div>
+                            <div class="review-rating-display">
+                                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                            </div>
+                        </div>
+                        <div class="review-text">${review.comment}</div>
+                        <div class="review-actions-admin">
+                            <button class="btn-approve" onclick="authSystem.approveReview(${review.id})">✓ Onayla</button>
+                            <button class="btn-reject" onclick="authSystem.rejectReview(${review.id})">✗ Reddet</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            async approveReview(reviewId) {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/reviews/${reviewId}/approve`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        this.showAlert('adminAlert', 'success', 'Yorum onaylandı');
+                        this.loadPendingReviews();
+                        reviewSystem.loadReviews();
+                    } else {
+                        this.showAlert('adminAlert', 'error', 'Yorum onaylanamadı');
+                    }
+                } catch (error) {
+                    this.showAlert('adminAlert', 'error', 'Bağlantı hatası');
+                    console.error('Error approving review:', error);
+                }
+            }
+
+            async rejectReview(reviewId) {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/reviews/${reviewId}/reject`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        this.showAlert('adminAlert', 'success', 'Yorum reddedildi');
+                        this.loadPendingReviews();
+                    } else {
+                        this.showAlert('adminAlert', 'error', 'Yorum reddedilemedi');
+                    }
+                } catch (error) {
+                    this.showAlert('adminAlert', 'error', 'Bağlantı hatası');
+                    console.error('Error rejecting review:', error);
+                }
+            }
+        }
+
+        // Review System
+        class ReviewSystem {
+            constructor() {
+                this.reviews = [];
+                this.initStarRating();
+                this.initCharacterCounter();
+                this.initSubmitButton();
+                this.loadReviews();
+            }
+
+            initStarRating() {
+                console.log('⭐ Initializing star rating system...');
+
+                // Initialize all star rating categories
+                const categories = ['overall', 'physical_facilities', 'teacher_quality', 'transportation'];
+                this.ratings = {
+                    overall: 0,
+                    physical_facilities: 0,
+                    teacher_quality: 0,
+                    transportation: 0
+                };
+
+                categories.forEach(category => {
+                    const starRatings = document.querySelectorAll(`.star-rating[data-rating="${category}"] .star`);
+                    console.log(`⭐ Found ${category} stars:`, starRatings.length);
+
+                    if (starRatings.length > 0) {
+                        starRatings.forEach((star, index) => {
+                            star.addEventListener('click', () => {
+                                this.ratings[category] = index + 1;
+                                console.log(`⭐ ${category} rating:`, this.ratings[category]);
+                                this.highlightStars(starRatings, index + 1);
+                                this.updateOverallRating();
+                            });
+
+                            star.addEventListener('mouseover', () => {
+                                this.highlightStars(starRatings, index + 1);
+                            });
+                        });
+
+                        // Reset on mouse leave
+                        const starContainer = document.querySelector(`.star-rating[data-rating="${category}"]`);
+                        if (starContainer) {
+                            starContainer.addEventListener('mouseleave', () => {
+                                this.highlightStars(starRatings, this.ratings[category]);
+                            });
+                        }
+                    }
+                });
+
+                console.log('✅ Star rating system initialized');
+            }
+
+            updateOverallRating() {
+                const { physical_facilities, teacher_quality, transportation } = this.ratings;
+                if (physical_facilities > 0 && teacher_quality > 0 && transportation > 0) {
+                    const average = Math.round((physical_facilities + teacher_quality + transportation) / 3);
+                    this.ratings.overall = average;
+                    currentRating = average;
+
+                    // Update overall stars display
+                    const overallStars = document.querySelectorAll('.star-rating[data-rating="overall"] .star');
+                    this.highlightStars(overallStars, average);
+
+                    console.log('⭐ Overall rating calculated:', average);
+                }
+            }
+
+            highlightStars(stars, rating) {
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.style.color = '#ffd700';
+                    } else {
+                        star.style.color = '#ddd';
+                    }
+                });
+            }
+
+            updateStarsInForm(rating) {
+                const stars = document.querySelectorAll('.star-rating[data-rating="overall"] .star');
+                this.highlightStars(stars, rating);
+            }
+
+            updateStars(rating) {
+                console.log('⭐ Updating stars with rating:', rating);
+                const stars = document.querySelectorAll('.star-input');
+                console.log('⭐ Found stars for update:', stars.length);
+
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('active');
+                        star.style.color = '#ffd700'; // Gold color for active stars
+                    } else {
+                        star.classList.remove('active');
+                        star.style.color = '#ddd'; // Gray color for inactive stars
+                    }
+                });
+            }
+
+            initCharacterCounter() {
+                const textarea = document.getElementById('commentTextarea');
+                const counter = document.getElementById('charCounter');
+
+                textarea.addEventListener('input', () => {
+                    const current = textarea.value.length;
+                    counter.textContent = `${current}/500`;
+                    counter.classList.toggle('warning', current > 450);
+                });
+            }
+
+            initSubmitButton() {
+                console.log('💬 Initializing submit button...');
+
+                // Handle form submission
+                const reviewForm = document.getElementById('reviewForm');
+                if (reviewForm) {
+                    reviewForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.submitReview();
+                    });
+                    console.log('✅ Review form submit listener added');
+                }
+
+                // Handle add review button
+                const addReviewBtn = document.getElementById('addReviewBtn');
+                console.log('💬 Add review button element:', addReviewBtn);
+                if (addReviewBtn) {
+                    addReviewBtn.addEventListener('click', () => {
+                        console.log('💬 Add review button clicked!');
+                        this.showReviewForm();
+                    });
+                    console.log('✅ Add review button listener added');
+                } else {
+                    console.error('❌ Add review button not found!');
+                }
+
+                // Handle cancel button
+                const cancelBtn = document.getElementById('cancelReviewBtn');
+                if (cancelBtn) {
+                    cancelBtn.addEventListener('click', () => {
+                        this.hideReviewForm();
+                    });
+                    console.log('✅ Cancel button listener added');
+                }
+            }
+
+            showReviewForm() {
+                console.log('💬 showReviewForm called');
+                const formContainer = document.getElementById('reviewFormContainer');
+                console.log('💬 Form container:', formContainer);
+                if (formContainer) {
+                    formContainer.style.display = 'block';
+                    console.log('✅ Review form shown');
+                } else {
+                    console.error('❌ Review form container not found!');
+                }
+            }
+
+            hideReviewForm() {
+                const formContainer = document.getElementById('reviewFormContainer');
+                if (formContainer) {
+                    formContainer.style.display = 'none';
+                    this.resetForm();
+                    console.log('✅ Review form hidden');
+                }
+            }
+
+            async submitReview() {
+                console.log('💬 Submit review called');
+                console.log('💬 Current rating:', currentRating);
+
+                if (!currentRating) {
+                    alert('Lütfen puan seçiniz.');
+                    return;
+                }
+
+                // Use the correct textarea ID from the form
+                const commentElement = document.getElementById('reviewComment');
+                if (!commentElement) {
+                    alert('Yorum alanı bulunamadı.');
+                    return;
+                }
+
+                const comment = commentElement.value.trim();
+                console.log('💬 Comment:', comment);
+
+                if (!comment) {
+                    alert('Lütfen yorum yazınız.');
+                    return;
+                }
+
+                if (comment.length < 10) {
+                    alert('Yorum en az 10 karakter olmalıdır.');
+                    return;
+                }
+
+                // Check if user is logged in
+                const user = localStorage.getItem('user');
+                let userData = null;
+
+                if (user) {
+                    try {
+                        userData = JSON.parse(user);
+                    } catch (e) {
+                        console.log('💬 User data parse error, using demo user');
+                    }
+                }
+
+                // Use demo user if not logged in
+                if (!userData) {
+                    userData = { id: 1, username: 'Demo User' };
+                    console.log('💬 Using demo user data');
+                }
+
+                console.log('💬 User data:', userData);
+
+                const submitBtn = document.querySelector('#reviewForm button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Gönderiliyor...';
+                }
+
+                try {
+                    const reviewData = {
+                        user_id: userData.user_id || userData.id || 1,
+                        school_id: 1, // Current school
+                        rating: currentRating,
+                        physical_facilities_rating: this.ratings?.physical_facilities || 0,
+                        teacher_quality_rating: this.ratings?.teacher_quality || 0,
+                        transportation_rating: this.ratings?.transportation || 0,
+                        comment: comment
+                    };
+
+                    console.log('💬 Sending review data:', reviewData);
+
+                    const response = await fetch(`${API_BASE}/reviews`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(reviewData)
+                    });
+
+                    console.log('💬 Response status:', response.status);
+                    const data = await response.json();
+                    console.log('💬 Response data:', data);
+
+                    if (response.ok) {
+                        this.resetForm();
+                        alert('Yorumunuz gönderildi. Admin onayından sonra yayınlanacaktır.');
+                        // Reload reviews to show updated list
+                        setTimeout(() => {
+                            this.loadReviews();
+                        }, 1000);
+                    } else {
+                        alert(data.message || 'Yorum gönderilemedi');
+                    }
+                } catch (error) {
+                    console.error('💬 Submit review error:', error);
+                    alert('Bağlantı hatası oluştu');
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Yorumu Gönder';
+                    }
+                }
+            }
+
+            resetForm() {
+                console.log('💬 Resetting form...');
+                currentRating = 0;
+
+                // Reset stars
+                const stars = document.querySelectorAll('.star-rating[data-rating="overall"] .star');
+                stars.forEach(star => {
+                    star.style.color = '#ddd';
+                });
+
+                // Reset comment
+                const commentElement = document.getElementById('reviewComment');
+                if (commentElement) {
+                    commentElement.value = '';
+                }
+
+                console.log('✅ Form reset');
+            }
+
+            async loadReviews(sortBy = 'quality') {
+                console.log('💬 Loading reviews with sort:', sortBy);
+                console.log('💬 API_BASE:', API_BASE);
+
+                // Try to load from API first
+                try {
+                    const url = `${API_BASE}/reviews/school/1?sort=${sortBy}`;
+                    console.log('💬 Fetching from URL:', url);
+
+                    const response = await fetch(url);
+                    console.log('💬 API Reviews response:', response.status);
+
+                    if (response.ok) {
+                        const apiReviews = await response.json();
+                        console.log('💬 API Reviews loaded:', apiReviews);
+                        console.log('💬 API Reviews count:', apiReviews.length);
+
+                        // ALWAYS use API reviews if available, even if empty
+                        this.reviews = apiReviews;
+                        this.displayReviews();
+                        this.updateReviewStats();
+                        console.log('✅ Using API reviews (count: ' + apiReviews.length + ')');
+                        return;
+                    } else {
+                        console.error('💬 API Error - Status:', response.status);
+                        const errorText = await response.text();
+                        console.error('💬 API Error - Response:', errorText);
+                    }
+                } catch (error) {
+                    console.error('💬 API Error:', error);
+                }
+
+                // Fallback to sample reviews if API fails
+                console.log('💬 API failed, showing sample reviews as fallback');
+                this.showSampleReviews();
+            }
+
+            showSampleReviews() {
+                console.log('💬 Showing sample reviews');
+                this.reviews = [
+                    {
+                        id: 1,
+                        user_name: 'Ayşe Yılmaz',
+                        rating: 5,
+                        comment: 'Çocuğum bu okulda çok mutlu. Öğretmenler gerçekten ilgili ve eğitim kalitesi yüksek.',
+                        timestamp: '2024-01-15'
+                    },
+                    {
+                        id: 2,
+                        user_name: 'Mehmet Kaya',
+                        rating: 4,
+                        comment: 'Genel olarak memnunuz. Sadece ulaşım biraz zor oluyor.',
+                        timestamp: '2024-01-10'
+                    },
+                    {
+                        id: 3,
+                        user_name: 'Fatma Demir',
+                        rating: 5,
+                        comment: 'Harika bir okul! Çocuğumun gelişimini net bir şekilde görebiliyoruz.',
+                        timestamp: '2024-01-05'
+                    }
+                ];
+                this.displayReviews();
+                this.updateReviewStats();
+            }
+
+            displayReviews(reviewsToShow = null) {
+                console.log('💬 Displaying reviews...');
+                const container = document.getElementById('reviewsList');
+                const reviews = reviewsToShow || this.reviews;
+
+                console.log('💬 Container:', container);
+                console.log('💬 Reviews to display:', reviews);
+
+                if (!container) {
+                    console.error('❌ Reviews container not found!');
+                    return;
+                }
+
+                if (!reviews || reviews.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">Henüz yorum bulunmuyor.</div>';
+                    return;
+                }
+
+                container.innerHTML = reviews.map(review => `
+                    <div class="review-item">
+                        <div class="review-item-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">
+                                    ${review.user_name.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="reviewer-details">
+                                    <h4>${review.user_name}</h4>
+                                    <div class="review-date">${review.timestamp || review.created_at || 'Tarih bilinmiyor'}</div>
+                                </div>
+                            </div>
+                            <div class="review-rating-display">
+                                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                            </div>
+                        </div>
+                        <div class="review-text">${review.comment}</div>
+                        <div class="review-actions">
+                            <button class="review-action-btn">👍 Faydalı (${review.helpful || 0})</button>
+                            <button class="review-action-btn">💬 Yanıtla</button>
+                            <button class="review-action-btn">🚩 Bildir</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                console.log('✅ Reviews displayed successfully');
+            }
+
+            updateReviewStats() {
+                if (this.reviews.length === 0) return;
+
+                const totalReviews = this.reviews.length;
+                const sum = this.reviews.reduce((acc, review) => acc + review.rating, 0);
+                const average = (sum / totalReviews).toFixed(1);
+
+                // Update average rating display
+                document.getElementById('averageRating').textContent = average;
+                document.getElementById('bigScore').textContent = average;
+                document.getElementById('reviewCount').textContent = `(${totalReviews} değerlendirme)`;
+                document.getElementById('totalReviews').textContent = `${totalReviews} değerlendirme`;
+
+                // Update star displays
+                const fullStars = Math.floor(average);
+                const hasHalfStar = average % 1 >= 0.5;
+                const starDisplay = '★'.repeat(fullStars) + (hasHalfStar ? '☆' : '') + '☆'.repeat(5 - fullStars - (hasHalfStar ? 1 : 0));
+
+                document.getElementById('schoolStars').textContent = starDisplay;
+                document.getElementById('bigStars').textContent = starDisplay;
+
+                // Update rating breakdown
+                const breakdown = [0, 0, 0, 0, 0];
+                this.reviews.forEach(review => {
+                    breakdown[review.rating - 1]++;
+                });
+
+                const breakdownContainer = document.getElementById('ratingBreakdown');
+                breakdownContainer.innerHTML = '';
+
+                for (let i = 4; i >= 0; i--) {
+                    const count = breakdown[i];
+                    const percentage = totalReviews > 0 ? (count / totalReviews * 100) : 0;
+
+                    breakdownContainer.innerHTML += `
+                        <div class="rating-bar">
+                            <span class="rating-label">${i + 1}</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: ${percentage}%"></div>
+                            </div>
+                            <span class="bar-count">${count}</span>
+                        </div>
+                    `;
+                }
+
+                // Update filter counts
+                document.getElementById('allCount').textContent = totalReviews;
+                document.getElementById('count5').textContent = breakdown[4];
+                document.getElementById('count4').textContent = breakdown[3];
+                document.getElementById('count3').textContent = breakdown[2];
+                document.getElementById('count2').textContent = breakdown[1];
+            }
+
+            filterReviews(filter) {
+                let filteredReviews = [...this.reviews];
+
+                switch(filter) {
+                    case 'all':
+                        break;
+                    case '5':
+                        filteredReviews = this.reviews.filter(review => review.rating === 5);
+                        break;
+                    case '4':
+                        filteredReviews = this.reviews.filter(review => review.rating === 4);
+                        break;
+                    case '3':
+                        filteredReviews = this.reviews.filter(review => review.rating === 3);
+                        break;
+                    case '2':
+                        filteredReviews = this.reviews.filter(review => review.rating === 2);
+                        break;
+                    case '1':
+                        filteredReviews = this.reviews.filter(review => review.rating === 1);
+                        break;
+                    case 'recent':
+                        filteredReviews = this.reviews.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                        break;
+                    case 'helpful':
+                        filteredReviews = this.reviews.sort((a, b) => (b.helpful || 0) - (a.helpful || 0));
+                        break;
+                }
+
+                this.displayReviews(filteredReviews);
+            }
+
+            toggleHelpful(reviewId) {
+                // Implement helpful toggle functionality
+                console.log('Toggle helpful for review:', reviewId);
+            }
+
+            showMessage(text, type) {
+                const container = document.getElementById('formMessages');
+                container.innerHTML = `<div class="message ${type}" style="display: block;">${text}</div>`;
+
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        // Global filter function
+        function filterReviews(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (reviewSystem) {
+                reviewSystem.filterReviews(filter);
+            }
+        }
+
+        // Panorama System (existing code)
+        const rooms = {
+            entrance: {
+                panorama: "https://pannellum.org/images/alma.jpg",
+                title: "Okul Girişi",
+                hotSpots: [
+                    { pitch: -10, yaw: 0, type: 'info', text: 'Ana Giriş Kapısı' },
+                    { pitch: 5, yaw: 90, type: 'info', text: 'Sekreterlik' }
+                ]
+            },
+            classroom: {
+                panorama: "https://pannellum.org/images/cerro-toco-0.jpg",
+                title: "Sınıf",
+                hotSpots: [
+                    { pitch: -5, yaw: 0, type: 'info', text: 'Akıllı Tahta' },
+                    { pitch: -20, yaw: 180, type: 'info', text: 'Öğrenci Sıraları' }
+                ]
+            },
+            library: {
+                panorama: "https://pannellum.org/images/bma-0.jpg",
+                title: "Kütüphane",
+                hotSpots: [
+                    { pitch: 0, yaw: 45, type: 'info', text: 'Kitap Rafları' },
+                    { pitch: -10, yaw: -45, type: 'info', text: 'Okuma Masaları' }
+                ]
+            },
+            playground: {
+                panorama: "https://pannellum.org/images/from-tree.jpg",
+                title: "Oyun Alanı",
+                hotSpots: [
+                    { pitch: -15, yaw: 0, type: 'info', text: 'Kaydırak' },
+                    { pitch: -10, yaw: 120, type: 'info', text: 'Salıncak' }
+                ]
+            }
+        };
+
+        function initPanorama() {
+            console.log('🌐 initPanorama called');
+            const panoramaElement = document.getElementById('panorama');
+            console.log('🌐 Panorama element:', panoramaElement);
+
+            if (!panoramaElement) {
+                console.error('❌ panorama element not found!');
+                return;
+            }
+
+            try {
+                console.log('🌐 Creating pannellum viewer...');
+                panoramaViewer = pannellum.viewer('panorama', {
+                    type: 'equirectangular',
+                    panorama: rooms.entrance.panorama,
+                    autoLoad: true,
+                    compass: true,
+                    northOffset: 0,
+                    hfov: 100,
+                    minHfov: 50,
+                    maxHfov: 120,
+                    hotSpots: rooms.entrance.hotSpots,
+                    showZoomCtrl: true,
+                    showFullscreenCtrl: false,
+                    autoRotate: 0
+                });
+                console.log('✅ Panorama viewer created successfully');
+            } catch (error) {
+                console.error('❌ Error initializing panorama:', error);
+                document.getElementById('panorama').innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #666;">360° Tur yükleniyor...</div>';
+            }
+        }
+
+        function switchRoom(roomKey) {
+            if (rooms[roomKey] && panoramaViewer) {
+                try {
+                    panoramaViewer.loadScene(rooms[roomKey].panorama);
+                    setTimeout(() => {
+                        rooms[roomKey].hotSpots.forEach(hotspot => {
+                            panoramaViewer.addHotSpot(hotspot);
+                        });
+                    }, 1000);
+
+                    document.querySelectorAll('.room-btn').forEach(btn => btn.classList.remove('active'));
+                    event.target.classList.add('active');
+                } catch (error) {
+                    console.error('Error switching room:', error);
+                }
+            }
+        }
+
+        function toggleFullscreen() {
+            try {
+                if (panoramaViewer) {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    } else {
+                        document.getElementById('panorama').requestFullscreen();
+                    }
+                }
+            } catch (error) {
+                console.error('Fullscreen error:', error);
+                alert('Tam ekran özelliği desteklenmiyor.');
+            }
+        }
+
+        function toggleAutoRotate() {
+            try {
+                if (panoramaViewer) {
+                    if (isAutoRotating) {
+                        panoramaViewer.stopAutoRotate();
+                        isAutoRotating = false;
+                        event.target.textContent = '🔄 Otomatik Döndür';
+                    } else {
+                        panoramaViewer.startAutoRotate(2);
+                        isAutoRotating = true;
+                        event.target.textContent = '⏸️ Durdur';
+                    }
+                }
+            } catch (error) {
+                console.error('Auto rotate error:', error);
+            }
+        }
+
+        // Photo Gallery (existing code)
+        const samplePhotos = [
+            { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800', title: 'Modern Sınıf Ortamı' },
+            { src: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800', title: 'Kütüphane ve Okuma Salonu' },
+            { src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800', title: 'Spor Salonu' },
+            { src: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=800', title: 'Basketbol Sahası' },
+            { src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800', title: 'Fen Laboratuvarı' },
+            { src: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800', title: 'Kimya Laboratuvarı' },
+            { src: 'https://images.unsplash.com/photo-1581726690015-c9861c2d3d8e?w=800', title: 'Dış Oyun Alanı' },
+            { src: 'https://images.unsplash.com/photo-1544587227-a1bd5ee52c99?w=800', title: 'Çocuk Oyun Alanı' },
+            { src: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800', title: 'Okul Bahçesi' },
+            { src: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800', title: 'Okul Binası Girişi' },
+            { src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800', title: 'Çok Amaçlı Salon' },
+            { src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800', title: 'Müzik Odası' },
+            { src: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800', title: 'Yemek Salonu' },
+            { src: 'https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?w=800', title: 'Bilgisayar Sınıfı' },
+            { src: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=800', title: 'Sanat Atölyesi' },
+            { src: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800', title: 'Anaokulu Sınıfı' }
+        ];
+
+        function initPhotoGallery() {
+            console.log('📸 initPhotoGallery called');
+            const gallery = document.getElementById('photoGallery');
+            console.log('📸 Gallery element:', gallery);
+
+            if (!gallery) {
+                console.error('❌ photoGallery element not found!');
+                return;
+            }
+
+            gallery.innerHTML = samplePhotos.map((photo, index) => `
+                <div class="swiper-slide" onclick="openPhotoModal(${index})" style="cursor: pointer;">
+                    <img src="${photo.src}" alt="${photo.title}">
+                    <div class="photo-overlay">
+                        <h4>${photo.title}</h4>
+                        <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">Büyütmek için tıklayın</p>
+                    </div>
+                </div>
+            `).join('');
+
+            console.log('📸 Gallery HTML set, photos count:', samplePhotos.length);
+
+            // Initialize Swiper if available
+            if (typeof Swiper !== 'undefined') {
+                try {
+                    new Swiper('.photo-swiper', {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                        loop: true,
+                        autoplay: { delay: 4000 },
+                        pagination: { el: '.swiper-pagination', clickable: true },
+                        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                        breakpoints: {
+                            640: { slidesPerView: 2 },
+                            768: { slidesPerView: 3 },
+                            1024: { slidesPerView: 4 }
+                        }
+                    });
+                    console.log('✅ Swiper initialized successfully');
+                } catch (error) {
+                    console.error('❌ Swiper initialization error:', error);
+                }
+            } else {
+                console.warn('⚠️ Swiper not available, using fallback');
+            }
+        }
+
+        // Teachers with video content (Türker Pehlivan's responsibility)
+        const sampleTeachers = [
+            {
+                name: 'Ayşe Yılmaz',
+                subject: 'Anaokulu Öğretmeni',
+                experience: '8 yıl deneyim',
+                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                description: 'Çocuk gelişimi konusunda uzman. Montessori eğitim metodunu uygular.',
+                achievements: ['Anaokulu Öğretmenliği Sertifikası', 'Montessori Eğitimi Uzmanı']
+            },
+            {
+                name: 'Mehmet Kaya',
+                subject: 'Fen Bilgisi Öğretmeni',
+                experience: '12 yıl deneyim',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+                videoUrl: 'https://www.youtube.com/embed/ScMzIvxBSi4',
+                description: 'Deneysel fen eğitimi konusunda uzman. Bilim fuarlarında ödüller kazanmış.',
+                achievements: ['Fen Bilgisi Öğretmenliği', 'Bilim Fuarı 1. Ödülü', 'STEM Eğitimi Sertifikası']
+            },
+            {
+                name: 'Fatma Demir',
+                subject: 'Türkçe Öğretmeni',
+                experience: '10 yıl deneyim',
+                avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+                videoUrl: 'https://www.youtube.com/embed/9bZkp7q19f0',
+                description: 'Yaratıcı yazma ve okuma alışkanlığı geliştirme konusunda uzman.',
+                achievements: ['Türkçe Öğretmenliği', 'Yaratıcı Yazma Kursu', 'Okuma Alışkanlığı Uzmanı']
+            },
+            {
+                name: 'Ali Özkan',
+                subject: 'Beden Eğitimi Öğretmeni',
+                experience: '6 yıl deneyim',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+                videoUrl: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                description: 'Çocuk sporları ve hareket gelişimi konusunda uzman.',
+                achievements: ['Beden Eğitimi Öğretmenliği', 'Çocuk Sporları Uzmanı', 'İlk Yardım Sertifikası']
+            },
+            {
+                name: 'Zehra Kara',
+                subject: 'İngilizce Öğretmeni',
+                experience: '9 yıl deneyim',
+                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+                videoUrl: 'https://www.youtube.com/embed/YQHsXMglC9A',
+                description: 'Oyunla İngilizce öğretimi ve erken yaş dil gelişimi uzmanı.',
+                achievements: ['İngilizce Öğretmenliği', 'TESOL Sertifikası', 'Erken Yaş Dil Gelişimi']
+            },
+            {
+                name: 'Murat Şen',
+                subject: 'Müzik Öğretmeni',
+                experience: '7 yıl deneyim',
+                avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face',
+                videoUrl: 'https://www.youtube.com/embed/fJ9rUzIMcZQ',
+                description: 'Çocuk müziği ve ritim eğitimi konusunda uzman.',
+                achievements: ['Müzik Öğretmenliği', 'Piyano Eğitimi', 'Çocuk Korosu Yöneticiliği']
+            }
+        ];
+
+        function initTeachersGrid() {
+            console.log('👩‍🏫 initTeachersGrid called');
+            const grid = document.getElementById('teachersGrid');
+            console.log('👩‍🏫 Teachers grid element:', grid);
+
+            if (!grid) {
+                console.error('❌ teachersGrid element not found!');
+                return;
+            }
+
+            grid.innerHTML = sampleTeachers.map((teacher, index) => `
+                <div class="teacher-card">
+                    <div class="teacher-avatar">
+                        <img src="${teacher.avatar}" alt="${teacher.name}" onerror="this.style.display='none'">
+                    </div>
+                    <div class="teacher-name">${teacher.name}</div>
+                    <div class="teacher-subject">${teacher.subject}</div>
+                    <div style="color: #666; font-size: 0.8rem; margin-bottom: 1rem;">${teacher.experience}</div>
+                    <button class="teacher-video-btn" onclick="playTeacherVideo(${index})">
+                        🎥 Tanıtım Videosunu İzle
+                    </button>
+                </div>
+            `).join('');
+
+            console.log('👩‍🏫 Teachers grid HTML set, teachers count:', sampleTeachers.length);
+        }
+
+        // Video Modal Functions (Türker Pehlivan's video embed system)
+        function playTeacherVideo(teacherIndex) {
+            const teacher = sampleTeachers[teacherIndex];
+            if (!teacher) return;
+
+            // Set video title
+            document.getElementById('videoTitle').textContent = `${teacher.name} - Tanıtım Videosu`;
+
+            // Set video iframe
+            document.getElementById('videoIframe').src = teacher.videoUrl;
+
+            // Set teacher info
+            document.getElementById('videoInfo').innerHTML = `
+                <div class="teacher-info">
+                    <img src="${teacher.avatar}" alt="${teacher.name}" class="teacher-avatar-large">
+                    <div class="teacher-details">
+                        <h3>${teacher.name}</h3>
+                        <p>${teacher.subject} • ${teacher.experience}</p>
+                    </div>
+                </div>
+                <div class="video-description">
+                    <p><strong>Hakkında:</strong> ${teacher.description}</p>
+                    <p><strong>Başarıları:</strong></p>
+                    <ul>
+                        ${teacher.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            // Show modal
+            document.getElementById('videoModal').classList.add('active');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('videoModal').classList.remove('active');
+            document.getElementById('videoIframe').src = '';
+        }
+
+        // Photo Modal Functions (Enhanced photo gallery)
+        let currentPhotoIndex = 0;
+
+        function openPhotoModal(photoIndex) {
+            currentPhotoIndex = photoIndex;
+            const photo = samplePhotos[photoIndex];
+            document.getElementById('photoModalImg').src = photo.src;
+            document.getElementById('photoModalImg').alt = photo.title;
+            document.getElementById('photoModal').classList.add('active');
+        }
+
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.remove('active');
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % samplePhotos.length;
+            const photo = samplePhotos[currentPhotoIndex];
+            document.getElementById('photoModalImg').src = photo.src;
+            document.getElementById('photoModalImg').alt = photo.title;
+        }
+
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + samplePhotos.length) % samplePhotos.length;
+            const photo = samplePhotos[currentPhotoIndex];
+            document.getElementById('photoModalImg').src = photo.src;
+            document.getElementById('photoModalImg').alt = photo.title;
+        }
+
+        // Keyboard event listeners for modals
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                // Close video modal
+                if (document.getElementById('videoModal').classList.contains('active')) {
+                    closeVideoModal();
+                }
+                // Close photo modal
+                if (document.getElementById('photoModal').classList.contains('active')) {
+                    closePhotoModal();
+                }
+            }
+        });
+
+        // Click outside modal to close
+        document.getElementById('videoModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeVideoModal();
+            }
+        });
+
+        document.getElementById('photoModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePhotoModal();
+            }
+        });
+
+        // Initialize everything
+        let authSystem;
+        let reviewSystem;
+
+        // Wait for libraries to load with timeout
+        function waitForLibraries() {
+            return new Promise((resolve) => {
+                let attempts = 0;
+                const maxAttempts = 50; // 5 seconds max
+
+                const checkLibraries = () => {
+                    attempts++;
+                    if (typeof pannellum !== 'undefined' && typeof Swiper !== 'undefined') {
+                        console.log('✅ All libraries loaded');
+                        resolve(true);
+                    } else if (attempts >= maxAttempts) {
+                        console.warn('⚠️ Libraries not loaded, using fallback');
+                        resolve(false);
+                    } else {
+                        console.log('⏳ Waiting for libraries... attempt', attempts);
+                        setTimeout(checkLibraries, 100);
+                    }
+                };
+                checkLibraries();
+            });
+        }
+
+        // Fallback functions for when libraries don't load
+        function initSimpleGallery() {
+            const gallery = document.getElementById('photoGallery');
+            if (!gallery) return;
+
+            gallery.innerHTML = samplePhotos.slice(0, 8).map((photo, index) => `
+                <div style="display: inline-block; width: 200px; margin: 10px; vertical-align: top;">
+                    <img src="${photo.src}" alt="${photo.title}"
+                         style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; cursor: pointer;"
+                         onclick="openPhotoModal(${index})">
+                    <p style="text-align: center; margin: 5px 0; font-size: 14px;">${photo.title}</p>
+                </div>
+            `).join('');
+            console.log('✅ Simple gallery initialized');
+        }
+
+        function initSimplePanorama() {
+            const panorama = document.getElementById('panorama');
+            if (!panorama) return;
+
+            panorama.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; border-radius: 12px;">
+                    <div>
+                        <h3>🌐 360° Sanal Tur</h3>
+                        <p>Panorama kütüphanesi yüklenirken lütfen bekleyin...</p>
+                        <p style="font-size: 14px; opacity: 0.8;">Okulumuzun her köşesini keşfetmek için sayfayı yenileyin.</p>
+                    </div>
+                </div>
+            `;
+            console.log('✅ Simple panorama placeholder initialized');
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 DOM Content Loaded - Starting initialization...');
+
+            // Wait a bit more for DOM to be fully ready
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            // Wait for libraries to load
+            const librariesLoaded = await waitForLibraries();
+
+            // Check if libraries are loaded
+            console.log('📚 Checking libraries...');
+            console.log('Pannellum available:', typeof pannellum !== 'undefined');
+            console.log('Swiper available:', typeof Swiper !== 'undefined');
+            console.log('DOMPurify available:', typeof DOMPurify !== 'undefined');
+
+            try {
+                // Initialize systems with delay
+                console.log('🔧 Initializing Auth System...');
+                setTimeout(() => {
+                    try {
+                        authSystem = new AuthSystem();
+                        console.log('✅ Auth System initialized');
+                    } catch (authError) {
+                        console.error('❌ Auth System initialization failed:', authError);
+                    }
+                }, 200);
+
+                console.log('💬 Initializing Review System...');
+                setTimeout(() => {
+                    try {
+                        reviewSystem = new ReviewSystem();
+                        console.log('✅ Review System initialized');
+
+                        // Load voted states
+                        loadVotedStates();
+                        console.log('✅ Voted states loaded');
+                    } catch (reviewError) {
+                        console.error('❌ Review System initialization failed:', reviewError);
+                    }
+                }, 300);
+
+                // Initialize components (Türker Pehlivan's content system)
+                if (librariesLoaded) {
+                    console.log('🎬 Initializing Panorama with Pannellum...');
+                    setTimeout(() => {
+                        initPanorama();
+                        console.log('✅ Panorama initialized');
+                    }, 500);
+
+                    console.log('📸 Initializing Photo Gallery with Swiper...');
+                    initPhotoGallery();
+                    console.log('✅ Photo Gallery initialized');
+                } else {
+                    console.log('🎬 Initializing Simple Panorama...');
+                    initSimplePanorama();
+
+                    console.log('📸 Initializing Simple Photo Gallery...');
+                    initSimpleGallery();
+                }
+
+                console.log('👩‍🏫 Initializing Teachers Grid...');
+                setTimeout(() => {
+                    initTeachersGrid();
+                    console.log('✅ Teachers Grid initialized');
+                }, 100);
+
+                console.log('🎬 Türker Pehlivan Video Embed System initialized');
+                console.log('📸 Enhanced Photo Gallery with modal view ready');
+                console.log('👩‍🏫 Teacher video presentations system ready');
+
+            } catch (error) {
+                console.error('❌ Initialization error:', error);
+            }
+        });
+    </script>
+
+    <!-- Yorum Sistemi JavaScript -->
+    <script src="js/reviews.js"></script>
+</body>
+</html>

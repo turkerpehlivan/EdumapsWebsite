@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sayfası</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 EduMaps Test Sayfası</h1>
+        
+        <div class="test-section">
+            <h3>1. Backend Bağlantı Testi</h3>
+            <button onclick="testBackend()">Backend'i Test Et</button>
+            <div id="backendResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. Okul Listesi Testi</h3>
+            <button onclick="testSchools()">Okulları Getir</button>
+            <div id="schoolsResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. Favoriler API Testi</h3>
+            <button onclick="testFavorites()">Favoriler API'sini Test Et</button>
+            <div id="favoritesResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. Ana Sayfa Linkleri</h3>
+            <a href="main.html" target="_blank">
+                <button>Ana Sayfa (main.html)</button>
+            </a>
+            <a href="index.html" target="_blank">
+                <button>Okul Detay (index.html)</button>
+            </a>
+            <a href="admin.html" target="_blank">
+                <button>Admin Panel</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:5000/api';
+
+        async function testBackend() {
+            const resultDiv = document.getElementById('backendResult');
+            resultDiv.innerHTML = 'Test ediliyor...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/schools`);
+                if (response.ok) {
+                    resultDiv.innerHTML = '✅ Backend çalışıyor!';
+                    resultDiv.className = 'result success';
+                } else {
+                    resultDiv.innerHTML = `❌ Backend hatası: ${response.status}`;
+                    resultDiv.className = 'result error';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Bağlantı hatası: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+
+        async function testSchools() {
+            const resultDiv = document.getElementById('schoolsResult');
+            resultDiv.innerHTML = 'Okullar getiriliyor...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/schools`);
+                const schools = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `✅ ${schools.length} okul bulundu:<br>` + 
+                        schools.map(s => `• ${s.name} (${s.city})`).join('<br>');
+                    resultDiv.className = 'result success';
+                } else {
+                    resultDiv.innerHTML = `❌ Hata: ${schools.message || 'Bilinmeyen hata'}`;
+                    resultDiv.className = 'result error';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Hata: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+
+        async function testFavorites() {
+            const resultDiv = document.getElementById('favoritesResult');
+            resultDiv.innerHTML = 'Favoriler API test ediliyor...';
+            
+            try {
+                // Test kullanıcısı için favoriler kontrolü
+                const response = await fetch(`${API_BASE}/users/1/favorites`);
+                
+                if (response.ok) {
+                    const favorites = await response.json();
+                    resultDiv.innerHTML = `✅ Favoriler API çalışıyor! ${favorites.length} favori okul bulundu.`;
+                    resultDiv.className = 'result success';
+                } else {
+                    resultDiv.innerHTML = `❌ Favoriler API hatası: ${response.status}`;
+                    resultDiv.className = 'result error';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Favoriler API hatası: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+
+        // Sayfa yüklendiğinde otomatik test
+        window.addEventListener('load', function() {
+            console.log('Test sayfası yüklendi');
+            testBackend();
+        });
+    </script>
+</body>
+</html>

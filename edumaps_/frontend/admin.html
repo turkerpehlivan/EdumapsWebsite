@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Yorum Yönetimi | EduMaps</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/reviews.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .admin-header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .admin-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 16px 24px;
+            background: #ecf0f1;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #2c3e50;
+        }
+
+        .tab-btn:hover {
+            background: #d5dbdb;
+        }
+
+        .tab-btn.active:hover {
+            background: white;
+        }
+
+        .badge {
+            background: #e74c3c;
+            color: white;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: 0 0 12px 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .admin-review-item {
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            background: #f8f9fa;
+        }
+
+        .admin-review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .review-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .review-school {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .review-user {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .spam-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .spam-score {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .spam-low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .spam-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .spam-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .review-content {
+            margin-bottom: 16px;
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+
+        .review-text {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            line-height: 1.6;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .approve-btn {
+            background: #27ae60;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #229954;
+        }
+
+        .reject-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #c0392b;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .login-form {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            width: 400px;
+            max-width: 90vw;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2c3e50;
+            box-shadow: 0 0 0 3px rgba(44,62,80,0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #34495e;
+        }
+
+        .login-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .login-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        .delete-btn {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 0 1rem;
+            }
+            
+            .admin-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .admin-tabs {
+                flex-direction: column;
+            }
+            
+            .admin-review-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .admin-actions {
+                justify-content: stretch;
+            }
+            
+            .action-btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <h1 class="admin-title">🛡️ Admin Panel - Yorum Yönetimi</h1>
+        <div class="admin-user">
+            <span id="adminName">Admin</span>
+            <button class="logout-btn" onclick="logout()">Çıkış</button>
+        </div>
+    </header>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- İstatistikler -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-number" id="pendingCount">0</div>
+                <div class="stat-label">Bekleyen Yorum</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="approvedCount">0</div>
+                <div class="stat-label">Onaylanan Yorum</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="spamCount">0</div>
+                <div class="stat-label">Spam Yorum</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Toplam Yorum</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" id="pendingTab">
+                Bekleyen Yorumlar <span class="badge" id="pendingBadge">0</span>
+            </button>
+            <button class="tab-btn" id="spamTab">
+                Spam Yorumlar <span class="badge" id="spamBadge">0</span>
+            </button>
+            <button class="tab-btn" onclick="testAPI()" style="background: #ff6b6b; color: white;">
+                🔧 TEST API
+            </button>
+            <button class="tab-btn" onclick="forceRefresh()" style="background: #4ecdc4; color: white;">
+                🔄 REFRESH
+            </button>
+            <button class="tab-btn" onclick="alert('Tab test çalışıyor!')" style="background: #9b59b6; color: white;">
+                🧪 TAB TEST
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Bekleyen Yorumlar -->
+            <div class="tab-panel active" id="pendingPanel">
+                <div id="pendingReviews">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Bekleyen yorumlar yükleniyor...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spam Yorumlar -->
+            <div class="tab-panel" id="spamPanel">
+                <div id="spamReviews">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Spam yorumlar yükleniyor...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-form">
+            <h2 class="login-title">🛡️ Admin Girişi</h2>
+
+            <div id="loginError" class="login-error" style="display: none;"></div>
+
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label class="form-label" for="adminEmail">E-posta:</label>
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        class="form-input"
+                        placeholder="admin@edumaps.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="adminPassword">Şifre:</label>
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        class="form-input"
+                        placeholder="Şifrenizi girin"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Giriş Yap
+                </button>
+            </form>
+
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; font-size: 14px; color: #666; text-align: center;">
+                <strong>Test Admin Bilgileri:</strong><br>
+                E-posta: admin@edumaps.com<br>
+                Şifre: admin123
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        // Global functions for HTML onclick events
+        function switchTab(tabName) {
+            console.log('🖱️ Tab clicked:', tabName);
+            if (window.adminPanel) {
+                adminPanel.switchTab(tabName);
+            } else {
+                console.error('❌ AdminPanel not initialized yet');
+            }
+        }
+
+        // Test API function
+        async function testAPI() {
+            console.log('🔧 TEST API CLICKED');
+            console.log('Current Admin ID:', adminPanel.currentAdminId);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/admin/reviews/pending?admin_id=1');
+                const data = await response.json();
+                console.log('API Response:', data);
+
+                // Manuel olarak render et
+                adminPanel.pendingReviews = data;
+                adminPanel.renderPendingReviews();
+
+                // Stats güncelle
+                adminPanel.updateStats();
+
+                alert(`✅ API Test Başarılı!\n${data.length} adet pending review bulundu ve render edildi.`);
+            } catch (error) {
+                console.error('API Test Error:', error);
+                alert('API Test Error: ' + error.message);
+            }
+        }
+
+        // Force refresh function
+        function forceRefresh() {
+            console.log('🔄 FORCE REFRESH CLICKED');
+            console.log('Current Admin ID:', adminPanel.currentAdminId);
+
+            if (!adminPanel.currentAdminId) {
+                alert('Admin ID yok! Önce giriş yapın.');
+                return;
+            }
+
+            adminPanel.loadData();
+        }
+
+        // Initialize admin panel when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            window.adminPanel = new AdminPanel();
+        });
+    </script>
+</body>
+</html>

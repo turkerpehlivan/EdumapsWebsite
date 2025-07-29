@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medya Yönetimi - EduMaps Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin-media.css">
+    <!-- Dropzone.js for drag & drop file uploads -->
+    <link rel="stylesheet" href="libs/dropzone/dropzone.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>EduMaps Admin</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="admin.html">Dashboard</a>
+                <a href="admin-schools.html">Okullar</a>
+                <a href="admin-media.html" class="active">Medya</a>
+                <a href="admin-teachers.html">Öğretmenler</a>
+                <a href="admin-reviews.html">Yorumlar</a>
+                <a href="admin-users.html">Kullanıcılar</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h2>Medya Yönetimi</h2>
+                <div class="header-actions">
+                    <button id="uploadMediaBtn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Yeni Medya Ekle
+                    </button>
+                </div>
+            </header>
+
+            <!-- School Selection -->
+            <div class="school-select-container">
+                <label for="schoolSelect">Okul Seçin:</label>
+                <select id="schoolSelect" class="form-control">
+                    <option value="">Okul seçin...</option>
+                </select>
+            </div>
+
+            <!-- Media Management Tabs -->
+            <div class="media-tabs">
+                <button class="tab-btn active" data-tab="photos">Fotoğraflar</button>
+                <button class="tab-btn" data-tab="videos">Videolar</button>
+                <button class="tab-btn" data-tab="virtual-tour">Sanal Tur</button>
+            </div>
+
+            <!-- Media Content -->
+            <div class="media-content">
+                <!-- Photos Tab -->
+                <div id="photosTab" class="tab-content active">
+                    <div class="media-grid" id="photoGrid">
+                        <!-- Photos will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Videos Tab -->
+                <div id="videosTab" class="tab-content">
+                    <div class="media-grid" id="videoGrid">
+                        <!-- Videos will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Virtual Tour Tab -->
+                <div id="virtualTourTab" class="tab-content">
+                    <div class="virtual-tour-container">
+                        <div class="form-group">
+                            <label for="tourUrl">Sanal Tur URL:</label>
+                            <input type="text" id="tourUrl" class="form-control" placeholder="Sanal tur embed URL'sini girin">
+                        </div>
+                        <div class="preview-container" id="tourPreview">
+                            <!-- Tour preview will be shown here -->
+                        </div>
+                        <button id="saveTourBtn" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Modal -->
+            <div id="uploadModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Medya Yükle</h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form id="uploadForm" class="dropzone">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <label for="mediaTitle">Başlık:</label>
+                            <input type="text" id="mediaTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaDescription">Açıklama:</label>
+                            <textarea id="mediaDescription" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaType">Medya Tipi:</label>
+                            <select id="mediaType" class="form-control" required>
+                                <option value="photo">Fotoğraf</option>
+                                <option value="video">Video</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button type="button" class="btn btn-primary" id="saveMediaBtn">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Medya Düzenle</h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="editTitle">Başlık:</label>
+                            <input type="text" id="editTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDescription">Açıklama:</label>
+                            <textarea id="editDescription" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editOrder">Sıralama:</label>
+                            <input type="number" id="editOrder" class="form-control" min="0">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="deleteMediaBtn">Sil</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button type="button" class="btn btn-primary" id="updateMediaBtn">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="libs/dropzone/dropzone.min.js"></script>
+    <script src="js/admin-media.js"></script>
+</body>
+</html> 
